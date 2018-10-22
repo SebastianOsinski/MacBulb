@@ -1,0 +1,21 @@
+{
+  "name": "homebridge-plugin-macbulb",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": ">=0.8",
+    "homebridge": ">=0.1"
+  },
+  "dependencies": {
+    "brightness": "^3.0.0"
+  }
+}
