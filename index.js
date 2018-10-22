@@ -16,20 +16,35 @@ function MacBulb(log, config) {
 }
 
 MacBulb.prototype = {
-	getServices() {
-		const service = new Service.Lightbulb(this.name);
+	getServices() {	
+		const bulbService = new Service.Lightbulb(this.name);
 
-		service
+		const onCharacteristic = bulbService
 			.getCharacteristic(Characteristic.On)
 			.on('get', this.getOn.bind(this))
 			.on('set', this.setOn.bind(this));
 
-		service
+		const brightnessCharacteristic = bulbService
 			.getCharacteristic(Characteristic.Brightness)
 			.on('get', this.getBrightness)
 			.on('set', this.setBrightness.bind(this));
 
-		return [service];
+		const self = this;
+
+		setInterval(function() {
+			brightness.get().then(level => {
+				const brightnessLevel = Math.floor(level * 100);
+
+				if(brightnessLevel > 0) {
+					brightnessCharacteristic.updateValue(brightnessLevel);
+					self.lastBrightnessLevel = level;
+				}
+
+				onCharacteristic.updateValue(brightnessLevel > 0);
+			})
+		}, 1000);
+
+		return [bulbService];
 	},
 
 	getOn(callback) {
@@ -65,6 +80,8 @@ MacBulb.prototype = {
 
 	setBrightness(level, callback) {
 		const self = this;
+
+		self.log("Set brightness: ", level);
 
 		self.isSettingBrightness = true;
 		brightness.set(level / 100).then(() => {
