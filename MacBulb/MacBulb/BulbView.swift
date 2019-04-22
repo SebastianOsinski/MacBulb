@@ -11,6 +11,8 @@ import Cocoa
 final class BulbView: NSView {
     private let maskLayer = CALayer()
     
+    private let threadLayer = CALayer()
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         
@@ -20,7 +22,7 @@ final class BulbView: NSView {
         
         maskLayer.contents = maskImage.cgImage(forProposedRect: nil, context: nil, hints: nil)
         maskLayer.backgroundColor = NSColor.clear.cgColor
-        layer!.mask = maskLayer
+        layer?.mask = maskLayer
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -31,6 +33,9 @@ final class BulbView: NSView {
             widthAnchor.constraint(equalToConstant: width),
             heightAnchor.constraint(equalToConstant: height)
         ])
+        
+        threadLayer.backgroundColor = NSColor.brown.cgColor
+        layer?.addSublayer(threadLayer)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -41,7 +46,6 @@ final class BulbView: NSView {
         super.layout()
 
         maskLayer.frame = bounds
-        
-        print(maskLayer.frame)
+        threadLayer.frame = CGRect(x: 0.0, y: 0.0, width: bounds.width, height: bounds.height * 0.24)
     }
 }

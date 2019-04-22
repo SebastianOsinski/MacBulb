@@ -7,14 +7,12 @@ const baseUrl = "http://localhost:1234";
 module.exports = function(homebridge) {
     Service = homebridge.hap.Service;
     Characteristic = homebridge.hap.Characteristic;
-    homebridge.registerAccessory("homebridge-plugin-macbulb", "MacBulb", MacBulb);
+    homebridge.registerAccessory("homebridge-macbulb", "MacBulb", MacBulb);
 };
 
 function MacBulb(log, config) {
 	this.log = log;
 	this.name = config.name;
-	this.lastBrightnessLevel = 1.0;
-	this.isSettingBrightness = false;
 }
 
 MacBulb.prototype = {
