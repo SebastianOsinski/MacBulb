@@ -20,11 +20,11 @@ final class BulbState {
     }
     
     var brightness: Float {
-        return Float(color.brightnessComponent * 360.0)
+        return Float(color.brightnessComponent * 100.0)
     }
     
     private(set) var isOn = true
-    private(set) var color = NSColor(calibratedHue: 1.0, saturation: 0.0, brightness: 0.5, alpha: 1.0)
+    private(set) var color = NSColor(deviceHue: 1.0, saturation: 0.0, brightness: 0.5, alpha: 1.0)
     
     func update(isOn: Bool) {
         self.isOn = isOn
